@@ -5,6 +5,7 @@ import com.ass.entity.BorrowHistory;
 import com.mysql.jdbc.MySQLConnection;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -90,8 +91,8 @@ public class BookDAOImpl implements BookDAO {
 
         while (rs.next()) {
             BorrowHistory history = new BorrowHistory();
-            history.setBorrowedTime(rs.getDate("borrow_date").toLocalDate());
-            history.setReturnedTime(rs.getDate("return_date").toLocalDate());
+            history.setBorrowedTime(rs.getTimestamp("borrow_date").toLocalDateTime());
+            history.setReturnedTime(rs.getTimestamp("return_date").toLocalDateTime());
             list.add(history);
         }
         return list;

@@ -15,7 +15,7 @@
     <div class="container">
       <header class="jumbotron">
         <h1>Welcome to bookstore !</h1>
-        <form action="/result" method="post">
+        <form action="/result" method="GET">
           <div class="form-group">
             <label for="sname">Name</label>
             <input id="sname" class="form-control" type="text" name="searchByName" placeholder="Leave this blank to search all books ..">

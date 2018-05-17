@@ -1,24 +1,24 @@
 package com.ass.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BorrowHistory {
-    private LocalDate borrowedTime;
-    private LocalDate returnedTime;
+    private LocalDateTime borrowedTime;
+    private LocalDateTime returnedTime;
 
-    public LocalDate getBorrowedTime() {
+    public LocalDateTime getBorrowedTime() {
         return borrowedTime;
     }
 
-    public void setBorrowedTime(LocalDate borrowedTime) {
+    public void setBorrowedTime(LocalDateTime borrowedTime) {
         this.borrowedTime = borrowedTime;
     }
 
-    public LocalDate getReturnedTime() {
+    public LocalDateTime getReturnedTime() {
         return returnedTime;
     }
 
-    public void setReturnedTime(LocalDate returnedTime) {
+    public void setReturnedTime(LocalDateTime returnedTime) {
         this.returnedTime = returnedTime;
     }
 }

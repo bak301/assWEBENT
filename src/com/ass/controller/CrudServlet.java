@@ -18,6 +18,10 @@ import java.util.List;
 
 public class CrudServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MySQLConnection con = DBConnect.getConnection();
         BookDAOImpl dao = new BookDAOImpl(con);
 
@@ -33,9 +37,5 @@ public class CrudServlet extends HttpServlet {
         request.setAttribute("list", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("result.jsp");
         dispatcher.forward(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }
