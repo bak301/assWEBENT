@@ -2,6 +2,7 @@ package com.ass.DA;
 
 import com.ass.entity.Book;
 import com.ass.entity.BorrowHistory;
+import com.ass.utility.SQLDateTimeFormatter;
 import com.mysql.jdbc.MySQLConnection;
 
 import java.sql.*;
@@ -12,8 +13,8 @@ import java.util.List;
 public class BookDAOImpl implements BookDAO {
     private MySQLConnection con;
 
-    public BookDAOImpl(MySQLConnection con) {
-        this.con = con;
+    public BookDAOImpl() {
+        con = DBConnect.getConnection();
     }
 
     @Override
@@ -48,13 +49,28 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean updateBookState(int id, boolean isBorrowed) {
+    public boolean returnBook(int id, LocalDateTime returnDate) {
         try {
-            String query = "update book set isborrowed = ? where id = ?";
+            String query = "update borrowHistory set return_date = ? where id = ?";
 
             PreparedStatement stm = con.prepareStatement(query);
-            stm.setBoolean(1, isBorrowed);
+            stm.setString(1, SQLDateTimeFormatter.format(returnDate));
             stm.setInt(2, id);
+
+            return stm.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean borrowBook(int bookId, LocalDateTime borrowDate) {
+        try {
+            String query = "INSERT into borrowHistory (book_id, borrow_date) values (?,?)";
+            PreparedStatement stm = con.prepareStatement(query);
+            stm.setInt(1, bookId);
+            stm.setString(2, SQLDateTimeFormatter.format(borrowDate));
 
             return stm.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -66,16 +82,16 @@ public class BookDAOImpl implements BookDAO {
     private List<Book> getBookListFromResultSet(ResultSet rs) throws SQLException {
         LinkedList<Book> list = new LinkedList<>();
         while (rs.next()) {
-            Book b = new Book();
+            Book book = new Book();
             int id = rs.getInt("id");
 
-            b.setId(id);
-            b.setName(rs.getString("name"));
-            b.setAuthor(rs.getString("author"));
-            b.setBorrowed(rs.getBoolean("isborrowed"));
-            b.setHistory(getBookHistory(id));
+            book.setId(id);
+            book.setName(rs.getString("name"));
+            book.setAuthor(rs.getString("author"));
+            book.setBorrowed(rs.getBoolean("isborrowed"));
+            book.setHistory(getBookHistory(id));
 
-            list.add(b);
+            list.add(book);
         }
         rs.close();
         return list;

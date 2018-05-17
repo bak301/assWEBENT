@@ -5,7 +5,7 @@
   Time: 15:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
   <head>
     <title>$Title$</title>
@@ -14,21 +14,31 @@
   <body>
     <div class="container">
       <header class="jumbotron">
+
         <h1>Welcome to bookstore !</h1>
-        <form action="/result" method="GET">
+
+        <form action="/book" method="GET">
           <div class="form-group">
-            <label for="sname">Name</label>
-            <input id="sname" class="form-control" type="text" name="searchByName" placeholder="Leave this blank to search all books ..">
+            <small id="nameSuggest" class="form-text text-muted">Leave this field blank to search all books</small>
+            <input class="form-control form-control-lg"
+                   type="text"
+                   name="searchByName"
+                   placeholder="..Name.."
+                   aria-describedby="nameSuggest">
+            <input type="submit" class="btn btn-primary" name="sname" value="Search By Name">
           </div>
-          <input type="submit" class="btn btn-primary" name="sname" value="Search By Name">
 
           <div class="form-group">
-            <label for="sid"> ID </label>
-            <input id="sid" class="form-control" type="number" name="searchById" placeholder="..ID..">
+            <input class="form-control form-control-lg"
+                   type="number"
+                   name="searchById"
+                   placeholder="..ID..">
+            <input type="submit" class="btn btn-primary" name="sid" value="Search By ID">
           </div>
-          <input type="submit" class="btn btn-primary" name="sid" value="Search By ID">
         </form>
+
       </header>
+
     </div>
   </body>
 </html>
