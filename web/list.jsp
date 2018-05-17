@@ -52,7 +52,7 @@
                                 data-target="#collapse${book.getId()}"
                                 aria-expanded="false"
                                 aria-controls="collapse${book.getId()}">
-                                ${book.isBorrowed()}
+                                History
                         </button>
                     </td>
                     <td>
@@ -71,8 +71,13 @@
                             <tbody>
                             <c:forEach items="${book.getHistory()}" var="history">
                                 <tr>
-                                    <td>${history.getBorrowedTime()}</td>
-                                    <td>${history.getReturnedTime()}</td>
+                                    <td>${history.getBorrowedTime().toString().replace('T',' ')}</td>
+                                    <td>
+                                        <c:set var="date"
+                                               scope="page"
+                                               value="${history.getReturnedTime().toString().replace('T', ' ')}"/>
+                                        <c:out value="${'9999-12-31 23:59:59'.equals(date) ? 'Not Yet' : date}"/>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
