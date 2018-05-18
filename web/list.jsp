@@ -82,7 +82,8 @@
                                     <c:choose>
                                         <c:when test="${'9999-12-31 23:59:59'.equals(date)}">
                                             <td>Not Yet !</td>
-                                            <td><a href="/book/return?Id=${history.getId()}" class="btn btn-info">Return book</a></td>
+                                            <td><a href="/book/borrow?id=${history.getId()}" class="btn btn-info">Return
+                                                book</a></td>
                                         </c:when>
                                         <c:otherwise>
                                             <td>${date}</td>

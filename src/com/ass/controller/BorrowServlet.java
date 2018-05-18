@@ -5,7 +5,6 @@ import com.ass.DA.BookDAOImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,23 +13,43 @@ import java.time.LocalDateTime;
 
 public class BorrowServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getParameter("_method") != null) {
+            doPut(request, response);
+            return;
+        }
+
         int bookId = Integer.valueOf(request.getParameter("bookId"));
-        LocalDateTime borrowDateTime = LocalDateTime.parse(request.getParameter("borrowDateTime"));
+        String datetime = request.getParameter("borrowDateTime") + ":01";
+        LocalDateTime borrowDateTime = LocalDateTime.parse(datetime);
 
         BookDAO dao = new BookDAOImpl();
         boolean result = dao.borrowBook(bookId, borrowDateTime);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(result ? "result.jsp" : "error.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect(result ? "/result.jsp" : "/error.jsp");
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.valueOf(request.getParameter("id"));
+        LocalDateTime returnDateTime = LocalDateTime.parse(request.getParameter("returnDateTime") + ":01");
 
+        BookDAO dao = new BookDAOImpl();
+        boolean result = dao.returnBook(id, returnDateTime);
+
+        response.sendRedirect(result ? "/result.jsp" : "/error.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("bookId");
-        request.setAttribute("bookId", id);
-        request.getRequestDispatcher("/borrow.jsp").forward(request, response);
+        String bookId = request.getParameter("bookId");
+        String id = request.getParameter("id");
+
+        if (bookId != null) {
+            request.setAttribute("bookId", bookId);
+            request.getRequestDispatcher("/borrow.jsp").forward(request, response);
+            return;
+        } else if (id != null) {
+            request.setAttribute("id", id);
+            request.getRequestDispatcher("/return.jsp").forward(request, response);
+            return;
+        }
     }
 }
