@@ -25,7 +25,7 @@
                    name="searchByName"
                    placeholder="..Name.."
                    aria-describedby="nameSuggest">
-            <input type="submit" class="btn btn-primary" name="sname" value="Search By Name">
+            <input type="submit" class="btn btn-primary" name="sname" value="Search By Name"/>
           </div>
 
           <div class="form-group">
@@ -33,7 +33,7 @@
                    type="number"
                    name="searchById"
                    placeholder="..ID..">
-            <input type="submit" class="btn btn-primary" name="sid" value="Search By ID">
+            <input type="submit" class="btn btn-primary" name="sid" value="Search By ID"/>
           </div>
         </form>
 

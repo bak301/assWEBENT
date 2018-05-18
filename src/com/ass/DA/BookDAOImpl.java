@@ -3,15 +3,17 @@ package com.ass.DA;
 import com.ass.entity.Book;
 import com.ass.entity.BorrowHistory;
 import com.ass.utility.SQLDateTimeFormatter;
-import com.mysql.jdbc.MySQLConnection;
+import org.mariadb.jdbc.MariaDbConnection;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
 public class BookDAOImpl implements BookDAO {
-    private MySQLConnection con;
+    private MariaDbConnection con;
 
     public BookDAOImpl() {
         con = DBConnect.getConnection();
@@ -20,6 +22,10 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<Book> getBookByName(String name) {
         try {
+            if (con == null) {
+                System.out.println("FUCK YOU IT\"S NULL  !");
+                return null;
+            }
             String query = "select * from book where name like ?";
             PreparedStatement stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
@@ -88,7 +94,6 @@ public class BookDAOImpl implements BookDAO {
             book.setId(id);
             book.setName(rs.getString("name"));
             book.setAuthor(rs.getString("author"));
-            book.setBorrowed(rs.getBoolean("isborrowed"));
             book.setHistory(getBookHistory(id));
 
             list.add(book);

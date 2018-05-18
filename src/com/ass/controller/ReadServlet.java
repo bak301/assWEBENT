@@ -2,19 +2,14 @@ package com.ass.controller;
 
 import com.ass.DA.BookDAO;
 import com.ass.DA.BookDAOImpl;
-import com.ass.DA.DBConnect;
 import com.ass.entity.Book;
-import com.mysql.jdbc.MySQLConnection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
