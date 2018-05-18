@@ -24,6 +24,6 @@
 
     <servlet-mapping>
         <servlet-name>BorrowServlet</servlet-name>
-        <url-pattern>*/borrow</url-pattern>
+        <url-pattern>/book/borrow</url-pattern>
     </servlet-mapping>
 </web-app>

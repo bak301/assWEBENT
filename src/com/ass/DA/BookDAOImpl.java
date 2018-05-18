@@ -23,7 +23,7 @@ public class BookDAOImpl implements BookDAO {
     public List<Book> getBookByName(String name) {
         try {
             if (con == null) {
-                System.out.println("FUCK YOU IT\"S NULL  !");
+                System.out.println("CONNECTION IT\"S NULL  !");
                 return null;
             }
             String query = "select * from book where name like ?";
@@ -103,7 +103,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     private List<BorrowHistory> getBookHistory (int id) throws SQLException{
-        String query = "select * from borrowHistory inner join book on book.id=borrowHistory.book_id where borrowHistory.book_id = ?";
+        String query = "select * from borrowHistory inner join book on book.id=borrowHistory.book_id where borrowHistory.book_id = ? order by borrow_date";
         PreparedStatement stm = con.prepareStatement(query);
         stm.setInt(1, id);
 
@@ -112,6 +112,7 @@ public class BookDAOImpl implements BookDAO {
 
         while (rs.next()) {
             BorrowHistory history = new BorrowHistory();
+            history.setId(rs.getInt("id"));
             history.setBorrowedTime(rs.getTimestamp("borrow_date").toLocalDateTime());
             history.setReturnedTime(rs.getTimestamp("return_date").toLocalDateTime());
             list.add(history);

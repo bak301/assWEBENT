@@ -37,6 +37,7 @@
                 <th>Name</th>
                 <th>Author</th>
                 <th>Is Borrowed</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -56,28 +57,38 @@
                         </button>
                     </td>
                     <td>
-                        <a href="/book/${book.getId()}/borrow" class="btn btn-info">Change State</a>
+                        <a href="/book/borrow?bookId=${book.getId()}" class="btn btn-info">Borrow book</a>
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="2" style="padding: 0;"></td>
-                    <td colspan="2" style="padding: 0;">
+                    <td colspan="1" style="padding: 0;"></td>
+                    <td colspan="4" style="padding: 0;">
                         <table class="table collapse" id="collapse${book.getId()}">
                             <thead>
-                            <th>Borrow Date</th>
-                            <th>Return Date</th>
+                                <th>ID</th>
+                                <th>Borrow Date</th>
+                                <th>Return Date</th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                             <c:forEach items="${book.getHistory()}" var="history">
                                 <tr>
+                                    <td>${history.getId()}</td>
                                     <td>${history.getBorrowedTime().toString().replace('T',' ')}</td>
-                                    <td>
-                                        <c:set var="date"
-                                               scope="page"
-                                               value="${history.getReturnedTime().toString().replace('T', ' ')}"/>
-                                        <c:out value="${'9999-12-31 23:59:59'.equals(date) ? 'Not Yet' : date}"/>
-                                    </td>
+                                    <c:set var="date"
+                                           scope="page"
+                                           value="${history.getReturnedTime().toString().replace('T', ' ')}"/>
+                                    <c:choose>
+                                        <c:when test="${'9999-12-31 23:59:59'.equals(date)}">
+                                            <td>Not Yet !</td>
+                                            <td><a href="/book/return?Id=${history.getId()}" class="btn btn-info">Return book</a></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>${date}</td>
+                                            <td></td>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </tr>
                             </c:forEach>
                             </tbody>

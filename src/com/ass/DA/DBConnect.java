@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DBConnect {
     private static MariaDbConnection connection;
-    private static final String dbAddress = "jdbc:mariadb://localhost:3306/assWEBENT?user=root&password=rambo";
+    private static final String dbAddress = "jdbc:mariadb://localhost:3306/assWEBENT?user=bak&password=password";
 
     public static MariaDbConnection getConnection(){
         try {

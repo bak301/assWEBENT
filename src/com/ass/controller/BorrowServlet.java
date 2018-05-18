@@ -29,6 +29,8 @@ public class BorrowServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("borrow.jsp").forward(request, response);
+        String id = request.getParameter("bookId");
+        request.setAttribute("bookId", id);
+        request.getRequestDispatcher("/borrow.jsp").forward(request, response);
     }
 }
