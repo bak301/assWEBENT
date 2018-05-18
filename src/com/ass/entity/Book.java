@@ -1,11 +1,8 @@
 package com.ass.entity;
-import java.util.List;
-
 public class Book {
     private int id;
     private String name;
     private String author;
-    private List<BorrowHistory> history;
 
     public int getId() {
         return id;
@@ -29,13 +26,5 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public List<BorrowHistory> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<BorrowHistory> history) {
-        this.history = history;
     }
 }

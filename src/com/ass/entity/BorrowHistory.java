@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class BorrowHistory {
     private int id;
+    private int book_id;
     private LocalDateTime borrowedTime;
     private LocalDateTime returnedTime;
 
@@ -13,6 +14,14 @@ public class BorrowHistory {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(int book_id) {
+        this.book_id = book_id;
     }
 
     public LocalDateTime getBorrowedTime() {

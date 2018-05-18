@@ -1,8 +1,8 @@
 package com.ass.controller;
 
-import com.ass.DA.BookDAO;
-import com.ass.DA.BookDAOImpl;
 import com.ass.entity.Book;
+import com.ass.entity.BorrowHistory;
+import com.ass.model.BookBean;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,21 +15,42 @@ import java.util.List;
 
 public class ReadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BookDAO dao = new BookDAOImpl();
+        BookBean bean = new BookBean();
 
-        List<Book> list = new LinkedList<>();
+        List<BookBean> bookList = new LinkedList<>();
         if (request.getParameter("sname") != null) {
             String name = request.getParameter("searchByName");
-            list = dao.getBookByName(name);
-        } else if (request.getParameter("sid") != null) {
-            String data = request.getParameter("searchById");
-            boolean isIdNull = "".equals(data);
+            List<Book> books = bean.getBooksByName(name);
 
-            list = isIdNull ? new LinkedList<>() : dao.getBookById(Integer.valueOf(data));
+            for (Book b : books) {
+                BookBean bookModel = new BookBean();
+                bookModel.setBook(b);
+
+                List<BorrowHistory> histories = bean.getHistoriesByBookId(b.getId());
+                bookModel.setHistories(histories);
+                bookList.add(bookModel);
+            }
+
+        } else if (request.getParameter("sid") != null) {
+            String strId = request.getParameter("searchById");
+            boolean isIdNull = "".equals(strId);
+
+            if (!isIdNull) {
+                int id = Integer.valueOf(strId);
+
+                BookBean model = new BookBean();
+                Book b = new Book();
+                List<BorrowHistory> histories = bean.getHistoriesByBookId(b.getId());
+
+                model.setBook(b);
+                model.setHistories(histories);
+                bookList.add(model);
+            }
         }
 
-        request.setAttribute("list", list);
+        request.setAttribute("list", bookList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
         dispatcher.forward(request, response);
     }
+
 }

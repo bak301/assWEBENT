@@ -41,7 +41,8 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.list}" var="book">
+            <c:forEach items="${requestScope.list}" var="bookBean">
+                <c:set var="book" value="${bookBean.getBook()}"/>
                 <tr>
                     <td>${book.getId()}</td>
                     <td>${book.getName()}</td>
@@ -72,7 +73,7 @@
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                            <c:forEach items="${book.getHistory()}" var="history">
+                            <c:forEach items="${bookBean.getHistories()}" var="history">
                                 <tr>
                                     <td>${history.getId()}</td>
                                     <td>${history.getBorrowedTime().toString().replace('T',' ')}</td>

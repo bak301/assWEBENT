@@ -39,7 +39,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public List<Book> getBookById(int id)
+    public Book getBookById(int id)
     {
         try {
             String query = "select * from book where id=?";
@@ -47,7 +47,13 @@ public class BookDAOImpl implements BookDAO {
             stm.setInt(1, id);
 
             ResultSet rs = stm.executeQuery();
-            return getBookListFromResultSet(rs);
+
+            Book book = new Book();
+            book.setId(rs.getInt("id"));
+            book.setName(rs.getString("name"));
+            book.setAuthor(rs.getString("author"));
+
+            return book;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -55,7 +61,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean returnBook(int id, LocalDateTime returnDate) {
+    public boolean updateHistory(int id, LocalDateTime returnDate) {
         try {
             String query = "update borrowHistory set return_date = ? where id = ?";
 
@@ -71,7 +77,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean borrowBook(int bookId, LocalDateTime borrowDate) {
+    public boolean createBorrowHistory(int bookId, LocalDateTime borrowDate) {
         try {
             String query = "INSERT into borrowHistory (book_id, borrow_date) values (?,?)";
             PreparedStatement stm = con.prepareStatement(query);
@@ -89,12 +95,9 @@ public class BookDAOImpl implements BookDAO {
         LinkedList<Book> list = new LinkedList<>();
         while (rs.next()) {
             Book book = new Book();
-            int id = rs.getInt("id");
-
-            book.setId(id);
+            book.setId(rs.getInt("id"));
             book.setName(rs.getString("name"));
             book.setAuthor(rs.getString("author"));
-            book.setHistory(getBookHistory(id));
 
             list.add(book);
         }
@@ -102,20 +105,26 @@ public class BookDAOImpl implements BookDAO {
         return list;
     }
 
-    private List<BorrowHistory> getBookHistory (int id) throws SQLException{
+    @Override
+    public List<BorrowHistory> getHistories(int id) {
         String query = "select * from borrowHistory inner join book on book.id=borrowHistory.book_id where borrowHistory.book_id = ? order by borrow_date";
-        PreparedStatement stm = con.prepareStatement(query);
-        stm.setInt(1, id);
-
-        ResultSet rs = stm.executeQuery();
         LinkedList<BorrowHistory> list = new LinkedList<>();
+        try {
+            PreparedStatement stm = con.prepareStatement(query);
+            stm.setInt(1, id);
 
-        while (rs.next()) {
-            BorrowHistory history = new BorrowHistory();
-            history.setId(rs.getInt("id"));
-            history.setBorrowedTime(rs.getTimestamp("borrow_date").toLocalDateTime());
-            history.setReturnedTime(rs.getTimestamp("return_date").toLocalDateTime());
-            list.add(history);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                BorrowHistory history = new BorrowHistory();
+                history.setId(rs.getInt("id"));
+                history.setBook_id(rs.getInt("book_id"));
+                history.setBorrowedTime(rs.getTimestamp("borrow_date").toLocalDateTime());
+                history.setReturnedTime(rs.getTimestamp("return_date").toLocalDateTime());
+                list.add(history);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return list;
     }

@@ -1,9 +1,7 @@
 package com.ass.controller;
 
-import com.ass.DA.BookDAO;
-import com.ass.DA.BookDAOImpl;
+import com.ass.model.BookBean;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +15,11 @@ public class BorrowServlet extends HttpServlet {
             doPut(request, response);
             return;
         }
-
         int bookId = Integer.valueOf(request.getParameter("bookId"));
         String datetime = request.getParameter("borrowDateTime") + ":01";
-        LocalDateTime borrowDateTime = LocalDateTime.parse(datetime);
 
-        BookDAO dao = new BookDAOImpl();
-        boolean result = dao.borrowBook(bookId, borrowDateTime);
+        BookBean bean = new BookBean();
+        boolean result = bean.borrowBook(bookId, LocalDateTime.parse(datetime));
 
         response.sendRedirect(result ? "/result.jsp" : "/error.jsp");
     }
@@ -32,8 +28,8 @@ public class BorrowServlet extends HttpServlet {
         int id = Integer.valueOf(request.getParameter("id"));
         LocalDateTime returnDateTime = LocalDateTime.parse(request.getParameter("returnDateTime") + ":01");
 
-        BookDAO dao = new BookDAOImpl();
-        boolean result = dao.returnBook(id, returnDateTime);
+        BookBean bean = new BookBean();
+        boolean result = bean.returnBook(id, returnDateTime);
 
         response.sendRedirect(result ? "/result.jsp" : "/error.jsp");
     }
@@ -45,11 +41,9 @@ public class BorrowServlet extends HttpServlet {
         if (bookId != null) {
             request.setAttribute("bookId", bookId);
             request.getRequestDispatcher("/borrow.jsp").forward(request, response);
-            return;
         } else if (id != null) {
             request.setAttribute("id", id);
             request.getRequestDispatcher("/return.jsp").forward(request, response);
-            return;
         }
     }
 }
