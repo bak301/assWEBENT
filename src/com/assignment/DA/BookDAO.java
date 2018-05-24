@@ -1,7 +1,7 @@
-package com.ass.DA;
+package com.assignment.DA;
 
-import com.ass.entity.Book;
-import com.ass.entity.BorrowHistory;
+import com.assignment.entity.Book;
+import com.assignment.entity.BorrowHistory;
 
 import java.time.LocalDateTime;
 import java.util.List;

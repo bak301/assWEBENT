@@ -1,8 +1,8 @@
-package com.ass.controller;
+package com.assignment.controller;
 
-import com.ass.entity.Book;
-import com.ass.entity.BorrowHistory;
-import com.ass.model.BookBean;
+import com.assignment.entity.Book;
+import com.assignment.entity.BorrowHistory;
+import com.assignment.model.BookBean;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

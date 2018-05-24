@@ -1,8 +1,8 @@
-package com.ass.DA;
+package com.assignment.DA;
 
-import com.ass.entity.Book;
-import com.ass.entity.BorrowHistory;
-import com.ass.utility.SQLDateTimeFormatter;
+import com.assignment.entity.Book;
+import com.assignment.entity.BorrowHistory;
+import com.assignment.utility.SQLDateTimeFormatter;
 import org.mariadb.jdbc.MariaDbConnection;
 
 import java.sql.PreparedStatement;

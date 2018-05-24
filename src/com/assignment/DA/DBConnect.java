@@ -1,4 +1,4 @@
-package com.ass.DA;
+package com.assignment.DA;
 
 import org.mariadb.jdbc.MariaDbConnection;
 

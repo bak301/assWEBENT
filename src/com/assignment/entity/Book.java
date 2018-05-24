@@ -1,4 +1,4 @@
-package com.ass.entity;
+package com.assignment.entity;
 public class Book {
     private int id;
     private String name;

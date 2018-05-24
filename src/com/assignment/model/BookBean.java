@@ -1,9 +1,9 @@
-package com.ass.model;
+package com.assignment.model;
 
-import com.ass.DA.BookDAO;
-import com.ass.DA.BookDAOImpl;
-import com.ass.entity.Book;
-import com.ass.entity.BorrowHistory;
+import com.assignment.DA.BookDAO;
+import com.assignment.DA.BookDAOImpl;
+import com.assignment.entity.Book;
+import com.assignment.entity.BorrowHistory;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

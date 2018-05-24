@@ -9,12 +9,12 @@
 
     <servlet>
         <servlet-name>ReadServlet</servlet-name>
-        <servlet-class>com.ass.controller.ReadServlet</servlet-class>
+        <servlet-class>com.assignment.controller.ReadServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>BorrowServlet</servlet-name>
-        <servlet-class>com.ass.controller.BorrowServlet</servlet-class>
+        <servlet-class>com.assignment.controller.BorrowServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

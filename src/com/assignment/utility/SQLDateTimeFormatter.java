@@ -1,4 +1,4 @@
-package com.ass.utility;
+package com.assignment.utility;
 
 import java.time.LocalDateTime;
 

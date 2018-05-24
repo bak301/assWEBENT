@@ -1,6 +1,6 @@
-package com.ass.controller;
+package com.assignment.controller;
 
-import com.ass.model.BookBean;
+import com.assignment.model.BookBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
